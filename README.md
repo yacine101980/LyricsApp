@@ -1,4 +1,4 @@
-# FoodApp
+# LyricsApp
 
 Ceci est le projet de base pour l'UE Projet: initiation génie logiciel.
 
@@ -8,3 +8,5 @@ une application de recherche de paroles de chansons.
 Team 2:
 Oughlis Tikinas
 Zeghar Mohamed Lamine
+
+Team 1: BOUCENNA Yacine
