@@ -10,5 +10,5 @@ BOUCENNA Yacine
 LAIHEM Amine
 
 Team 2:
-Zeghar Mohamed Lamine
-Oughlis Tikinas
+ZEGHAR Mohamed Lamine
+OUGHLIS Tikinas
