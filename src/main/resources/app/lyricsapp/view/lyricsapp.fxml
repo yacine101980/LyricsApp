@@ -14,11 +14,6 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="683.0" prefWidth="918.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.lyricsapp.controller.LyricsAppController">
     <children>
-        <Label fx:id="label" alignment="CENTER" layoutX="-8.0" layoutY="15.0" prefHeight="50.0" prefWidth="224.0" style="-fx-font-size: 20; -fx-font-family: Castellar;" text="AD Music" textFill="#ad0025"
-               wrapText="true">
-            <font>
-                <Font size="21.0" />
-            </font></Label>
         <TextField fx:id="TitleTextField" layoutX="359.0" layoutY="123.0" prefHeight="25.0" prefWidth="300.0" promptText="Enter Your Title">
          <font>
             <Font size="18.0" />
@@ -39,7 +34,7 @@
          <font>
             <Font size="18.0" />
          </font></Button>
-        <Line endX="-100.00001525878906" endY="519.0" layoutX="315.0" layoutY="164.0" startX="-100.00001525878906" startY="-164.0" stroke="#ad0025"/>
+        <Line endX="-100.00001525878906" endY="519.0" layoutX="315.0" layoutY="164.0" startX="-100.00001525878906" startY="-164.0" stroke="#ad0025" />
       <Label layoutX="280.0" layoutY="72.0" text="Artist :" textFill="#a9a090">
          <font>
             <Font size="18.0" />
@@ -55,8 +50,8 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Line endX="700.0" layoutX="215.0" layoutY="181.0" startX="-0.5" stroke="#ad0025"/>
-      <Line endX="700.0" layoutX="215.0" layoutY="281.0" startX="-0.5" stroke="#ad0025"/>
+      <Line endX="700.0" layoutX="215.0" layoutY="181.0" startX="-0.5" stroke="#ad0025" />
+      <Line endX="700.0" layoutX="215.0" layoutY="281.0" startX="-0.5" stroke="#ad0025" />
       <ScrollPane layoutX="229.0" layoutY="304.0" prefHeight="350.0" prefWidth="671.0">
          <content>
             <GridPane fx:id="gridPane" prefHeight="350.0" prefWidth="671.0" style="-fx-background-color: black;">
@@ -69,16 +64,20 @@
             </GridPane>
          </content>
       </ScrollPane>
-      <Button fx:id="favoritesButton" layoutX="31.0" layoutY="106.0" mnemonicParsing="false" text="Liked Songs" textFill="#a9a090">
+      <Button fx:id="favoritesButton" layoutX="31.0" layoutY="106.0" mnemonicParsing="false" text="Favorites" textFill="#a9a090">
          <font>
             <Font size="22.0" />
          </font>
       </Button>
-      <Spinner fx:id="resultsSpinner" layoutX="501.0" layoutY="243.0" />
+      <Spinner fx:id="resultsSpinner" layoutX="459.0" layoutY="243.0" />
       <Label layoutX="280.0" layoutY="242.0" text="Number Of Results :" textFill="#a9a090">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
+      <Label layoutX="23.0" layoutY="35.0" text="AD Music" textFill="#ad0025">
+         <font>
+            <Font name="Bodoni MT Black Italic" size="31.0" />
+         </font></Label>
     </children>
 </AnchorPane>

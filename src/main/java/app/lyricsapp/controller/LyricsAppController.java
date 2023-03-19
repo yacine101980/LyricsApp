@@ -4,11 +4,14 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.xml.sax.SAXException;
 import javax.xml.parsers.ParserConfigurationException;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import javafx.geometry.Insets;
@@ -16,11 +19,9 @@ import app.lyricsapp.model.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-
 import java.util.ResourceBundle;
 
 public class LyricsAppController implements Initializable {
-
     @FXML private TextField TitleTextField;
     @FXML private Button favoritesButton;
     @FXML private Button SearchByTitleArtistButton;
@@ -53,7 +54,6 @@ public class LyricsAppController implements Initializable {
 
         biggerButton(favoritesButton, SearchByLyricsButton, SearchByTitleArtistButton);
 
-
         SearchByTitleArtistButton.setOnAction(event -> {
             gridPane.getChildren().clear();
 
@@ -71,7 +71,7 @@ public class LyricsAppController implements Initializable {
             songButton.setPadding(new Insets(0, 20, 0, 20));
             songButton.setPrefWidth(700);
             songButton.setPrefHeight(70);
-            songButton.setStyle("-fx-font-size: 20px;");
+            songButton.setStyle("-fx-font-size: 17px;");
 
             gridPane.add(songButton, 0, 0);
             gridPane.setPadding(new Insets(0, 100, 250, 100));
@@ -163,7 +163,7 @@ public class LyricsAppController implements Initializable {
                 songButton.setPadding(new Insets(0.0, 20, 0.0, 20));
                 songButton.setPrefWidth(700);
                 songButton.setPrefHeight(70);
-                songButton.setStyle("-fx-font-size: 20px;");
+                songButton.setStyle("-fx-font-size: 17px;");
                 gridPane.add(songButton, 0, i);
                 gridPane.setPadding(new Insets(20,100,250,100));
                 songButton.setOnAction(event1 -> {
@@ -249,7 +249,7 @@ public class LyricsAppController implements Initializable {
                 songButton.setPadding(new Insets(0.0, 20, 0.0, 20));
                 songButton.setPrefWidth(700);
                 songButton.setPrefHeight(70);
-                songButton.setStyle("-fx-font-size: 20px;");
+                songButton.setStyle("-fx-font-size: 17px;");
                 gridPane.add(songButton, 0, i + 2);
                 gridPane.setPadding(new Insets(0,100,250,100));
                 songButton.setOnAction(event1 -> {
@@ -318,12 +318,36 @@ public class LyricsAppController implements Initializable {
 
 
     public void windowOfMyLyrics(Song song) throws IOException, ParserConfigurationException, SAXException {
-        TextArea textArea= new TextArea();
-        textArea.setPrefSize(500, 680);
-        textArea.setText(SearchLyricDirect.searchLyricDirect(song.getAuthor(), song.getTitle()).getLyric());
-        Stage stage=new Stage();
+        BorderPane borderPane = new BorderPane();
+        String pathToCovert = CovertOfSong.showCovert(song.getAuthor(), song.getTitle());
+        Image image = null;
+        if(pathToCovert.isEmpty() || pathToCovert == null){
+            image = new Image(new FileInputStream("src/main/resources/app/lyricsapp/No_Cover.jpg"));
+        } else {
+            image =new Image(pathToCovert);
+            if (image.isError()) {
+                image = new Image(new FileInputStream("src/main/resources/app/lyricsapp/No_Cover.jpg"));
+            }
+        }
+        ImageView imageView = new ImageView(image);
+        imageView.setFitHeight(200);
+        imageView.setFitWidth(200);
+
+        TextArea textArea = new TextArea();
+        textArea.setPrefSize(500, 720);
+        String Lyric = SearchLyricDirect.searchLyricDirect(song.getAuthor(), song.getTitle()).getLyric();
+        if(Lyric == null || Lyric.equals("")){
+            Lyric = "No Lyrics Founded";
+        }
+        textArea.setText(Lyric);
+
+        borderPane.setCenter(textArea);
+        borderPane.setLeft(imageView);
+
+        Scene scene = new Scene(borderPane);
+        Stage stage = new Stage();
         stage.setTitle("Lyrics of " + song.getAuthor() + " - " + song.getTitle());
-        stage.setScene(new Scene(textArea));
+        stage.setScene(scene);
         stage.show();
     }
 
