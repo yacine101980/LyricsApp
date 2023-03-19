@@ -4,24 +4,18 @@ import java.util.Objects;
 
 public class Song {
 
-    int trackId;
-    String lyricChecksum;
-    int lyricId;
     String lyric;
-    String artistUrl;
     String author;
     String title;
-    int songRank;
 
-    public Song(int trackId, String lyricChecksum, int lyricId, String lyric, String artistUrl, String author, String title, int songRank) {
-        this.trackId = trackId;
-        this.lyricChecksum = lyricChecksum;
-        this.lyricId = lyricId;
+
+    public Song(String lyric, String author, String title) {
+
         this.lyric = lyric;
-        this.artistUrl = artistUrl;
+
         this.author = author;
         this.title = title;
-        this.songRank = songRank;
+
     }
 
     public String getAuthor() {
@@ -35,32 +29,14 @@ public class Song {
         return lyric;
     }
 
-    public int getTrackId() {
-        return trackId;
-    }
 
-    public String getLyricChecksum() {
-        return lyricChecksum;
-    }
-
-    public int getLyricId() {
-        return lyricId;
-    }
-
-    public String getArtistUrl() {
-        return artistUrl;
-    }
-
-    public int getSongRank() {
-        return songRank;
-    }
 
     public String toString(){
 
-        return "TrackId: " + getTrackId() + "\nLyricChecksum: " + getLyricChecksum() +
-                "\nLyricId: " + getLyricId() + "\nSongUrl: " + getLyric() +
-                "\nArtistUrl: " + getArtistUrl() + "\nArtist: " + getAuthor() +
-                "\nTitre: " + getTitle() + "\nSongRank: " + getSongRank() + "\n";
+        return
+                "\nLyric: " + getLyric() +
+             "\nArtist: " + getAuthor() +
+                "\nTitre: " + getTitle() +"\n";
     }
 
     @Override
@@ -68,12 +44,12 @@ public class Song {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Song song = (Song) o;
-        return trackId == song.trackId && lyricId == song.lyricId && songRank == song.songRank && Objects.equals(lyricChecksum, song.lyricChecksum) && Objects.equals(lyric, song.lyric) && Objects.equals(artistUrl, song.artistUrl) && Objects.equals(author, song.author) && Objects.equals(title, song.title);
+        return Objects.equals(lyric, song.lyric) && Objects.equals(author, song.author) && Objects.equals(title, song.title);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(trackId, lyricChecksum, lyricId, lyric, artistUrl, author, title, songRank);
+        return Objects.hash(lyric,  author, title);
     }
 }
 

@@ -1,12 +1,10 @@
 package app.lyricsapp.model;
 
-import java.util.ArrayList;
-
-public class AddMusicException extends Exception {
+public class songException extends Exception {
     private String artist;
     private String title;
 
-    public AddMusicException(String title, String artist){
+    public songException(String title, String artist){
         this.title = title;
         this.artist = artist;
     }

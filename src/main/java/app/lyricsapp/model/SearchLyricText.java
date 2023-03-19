@@ -14,18 +14,24 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 public class SearchLyricText {
-    public static void searchLyricText(String lyrics) throws IOException, SAXException, ParserConfigurationException {
+    ArrayList<Song> toPrint;
+    public SearchLyricText(){
+        this.toPrint = new ArrayList<>();
+    }
 
-        ArrayList<Song> toPrint = new ArrayList<>();
+    public ArrayList<Song> getToPrint() {
+        return toPrint;
+    }
 
-        int TrackId = 0;
-        int SongRank = 0;
+    public void searchLyricText(String lyrics) throws IOException, SAXException, ParserConfigurationException {
+
+
+
         String Artist = null;
-        int LyricId = 0;
-        String ArtistUrl = null;
+
         String song = null;
         String SongUrl = null;
-        String LyricChecksum = null;
+
 
         String lien = "http://api.chartlyrics.com/apiv1.asmx/SearchLyricText?lyricText=" + URLEncoder.encode(lyrics, StandardCharsets.UTF_8);
 
@@ -48,33 +54,22 @@ public class SearchLyricText {
             for(int j = 1; j < newNodeList.getLength(); j++) {
 
                 Node nodeToCheck = newNodeList.item(j);
-                if (nodeToCheck.getNodeName().equals("TrackId")) {
-                    TrackId = Integer.parseInt(newNodeList.item(j).getTextContent());
-                }
-                if (nodeToCheck.getNodeName().equals("LyricChecksum")) {
-                    LyricChecksum = newNodeList.item(j).getTextContent();
-                }
-                if (nodeToCheck.getNodeName().equals("LyricId")) {
-                    LyricId = Integer.parseInt(newNodeList.item(j).getTextContent());
-                }
+
+
                 if (nodeToCheck.getNodeName().equals("SongUrl")) {
                     SongUrl = newNodeList.item(j).getTextContent();
                 }
-                if (nodeToCheck.getNodeName().equals("ArtistUrl")) {
-                    ArtistUrl = newNodeList.item(j).getTextContent();
-                }
+
                 if (nodeToCheck.getNodeName().equals("Artist")) {
                     Artist = newNodeList.item(j).getTextContent();
                 }
                 if (nodeToCheck.getNodeName().equals("Song")) {
                     song = newNodeList.item(j).getTextContent();
                 }
-                if (nodeToCheck.getNodeName().equals("SongRank")) {
-                    SongRank = Integer.parseInt(newNodeList.item(j).getTextContent());
-                }
+
             }
-            Song music = new Song(TrackId, LyricChecksum, LyricId, SongUrl, ArtistUrl, Artist, song, SongRank);
-            if(!toPrint.contains(music)){
+            Song music = new Song(SongUrl, Artist, song);
+            if(!getToPrint().contains(music)){
                 toPrint.add(music);
             }
         }

@@ -9,10 +9,10 @@ public class Playlist {
         this.songs = new ArrayList<Song>();
 
     }
-    public void addMusic (Song song) throws AddMusicException {
+    public void addMusic (Song song) throws songException {
 
         if (songs.contains(song)){
-            throw new AddMusicException(song.getTitle(), song.getAuthor());
+            throw new songException(song.getTitle(), song.getAuthor());
 
         }
         else {

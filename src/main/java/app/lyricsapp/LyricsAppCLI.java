@@ -33,7 +33,11 @@ public class LyricsAppCLI {
                 Scanner scanner3 = new Scanner(System.in);
                 String paroles = scanner3.nextLine();
                 String lyrics = paroles;
-                SearchLyricText.searchLyricText(lyrics);
+                SearchLyricText search = new SearchLyricText();
+                search.searchLyricText(lyrics);
+                for (int i = 0; i < search.getToPrint().size() - 1; i++) {
+                    System.out.println(i + "." + search.getToPrint().toString());
+                }
             }
 
             if (input.equals("0")) {

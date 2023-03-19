@@ -12,17 +12,13 @@ import java.io.IOException;
 
 
 public class SearchLyricDirect{
-    public static void searchLyricDirect(String artist, String title) throws IOException, ParserConfigurationException, SAXException {
-        String TrackId = "0";
-        String LyricChecksum = null;
-        String LyricId = "0";
+    public static Song searchLyricDirect(String artist, String title) throws IOException, ParserConfigurationException, SAXException {
+
         String LyricArtist = null;
         String LyricSong = null;
-        String LyricUrl = null;
-        String LyricCovertArtUrl = null;
-        String LyricCorrectUrl = null ;
+
         String Lyric =null;
-        String LyricRank = String.valueOf(0);
+
 
         Document document = null;
         DocumentBuilderFactory factory = null;
@@ -41,18 +37,10 @@ public class SearchLyricDirect{
         for(int i = 0; i < v.getLength(); i++)
         {
             Node r = v.item(i);
-            if (r.getNodeName().equals("TrackId")) TrackId = String.valueOf(Integer.parseInt(r.getTextContent()));
-            if (r.getNodeName().equals("LyricChecksum")) LyricChecksum = new String(r.getTextContent());
-            if (r.getNodeName().equals("LyricId")) LyricId = String.valueOf(Integer.parseInt(r.getTextContent()));
-            if (r.getNodeName().equals("LyricCovertArtUrl")) LyricCovertArtUrl = new String(r.getTextContent());
             if (r.getNodeName().equals("LyricSong")) LyricSong = new String(r.getTextContent());
             if (r.getNodeName().equals("LyricArtist")) LyricArtist = new String(r.getTextContent());
-            if (r.getNodeName().equals("LyricUrl")) {LyricUrl = new String(r.getTextContent());}
-            if (r.getNodeName().equals("LyricRank")) LyricRank = String.valueOf(Integer.parseInt(r.getTextContent()));
-            if (r.getNodeName().equals("LyricCorrectUrl")) LyricCorrectUrl = new String(r.getTextContent());
             if (r.getNodeName().equals("Lyric")) Lyric = new String(r.getTextContent());
         }
-        System.out.println(new Lyric( LyricCovertArtUrl, LyricCorrectUrl,Lyric,TrackId,LyricChecksum,LyricId, LyricSong, LyricArtist, LyricUrl,LyricRank));
-        System.out.println(v.getLength());
+        return new Song(Lyric, LyricArtist, LyricSong);
     }
 }
