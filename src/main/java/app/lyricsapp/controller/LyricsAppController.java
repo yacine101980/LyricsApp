@@ -1,5 +1,7 @@
 package app.lyricsapp.controller;
 
+import javafx.geometry.HPos;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
@@ -66,127 +68,55 @@ public class LyricsAppController implements Initializable {
             } catch (IOException | ParserConfigurationException | SAXException e) {
                 throw new RuntimeException(e);
             }
-            Button songButton = new Button();
-            songButton.setText(song.getAuthor() + " - " + song.getTitle());
-            songButton.setPadding(new Insets(0, 20, 0, 20));
-            songButton.setPrefWidth(700);
-            songButton.setPrefHeight(70);
-            songButton.setStyle("-fx-font-size: 17px;");
-
-            gridPane.add(songButton, 0, 0);
-            gridPane.setPadding(new Insets(0, 100, 250, 100));
-            Song finalSong = song;
-            songButton.setOnAction(event1 -> {
-                try {
-                    windowOfMyLyrics(finalSong);
-                } catch (IOException | ParserConfigurationException | SAXException e) {
-                    throw new RuntimeException(e);
-                }
-            });
-
-
-            Button addFav = new Button("\u2661");
-            addFav.setStyle("-fx-text-fill: black;-fx-font-size: 30px;");
-
-            addFav.setPrefSize(70, 70);
-            gridPane.add(addFav, 1, 0);
-
-            CornerRadii songButtonCornerRadii = new CornerRadii(50, 0, 0, 50, false);
-            BackgroundFill songButtonBackgroundFill = new BackgroundFill(Color.rgb(173,0,37), songButtonCornerRadii, null);
-            Background songButtonBackground = new Background(songButtonBackgroundFill);
-
-            CornerRadii addFavCornerRadii = new CornerRadii(0, 50, 50, 0, false);
-            BackgroundFill addFavBackgroundFill = new BackgroundFill(Color.rgb(173,0,37), addFavCornerRadii, null);
-            Background addFavBackground = new Background(addFavBackgroundFill);
-
-            songButton.setBackground(songButtonBackground);
-            addFav.setBackground(addFavBackground);
-
-            songButton.setTextFill(Color.rgb(169, 160, 144));
-
-            Song finalSong1 = song;
-            addFav.setOnAction(event1 -> {
-                addFav.setStyle("-fx-text-fill: #A9A090; -fx-font-size: 30px;");
-                try {
-                    MyFav.addMusic(finalSong1);
-                } catch (songException e) {
-                    throw new RuntimeException(e);
-                }
-
-            });
-
-            songButton.setOnMouseEntered(event1 -> {
-                songButton.setScaleX(1.1);
-                songButton.setScaleY(1.1);
-                addFav.setScaleX(1.1);
-                addFav.setScaleY(1.1);
-            });
-            songButton.setOnMouseExited(event1 -> {
-                songButton.setScaleX(1.0);
-                songButton.setScaleY(1.0);
-                addFav.setScaleX(1.0);
-                addFav.setScaleY(1.0);
-            });
-
-            addFav.setOnMouseEntered(event1 -> {
-                addFav.setScaleX(1.1);
-                addFav.setScaleY(1.1);
-                songButton.setScaleX(1.1);
-                songButton.setScaleY(1.1);
-            });
-
-            addFav.setOnMouseExited(event1 -> {
-                addFav.setScaleX(1.0);
-                addFav.setScaleY(1.0);
-                songButton.setScaleX(1.0);
-                songButton.setScaleY(1.0);
-            });
-        });
-
-        SearchByLyricsButton.setOnAction(event -> {
-            gridPane.getChildren().clear();
-
-            int numberOfResult = value.getValue();
-            String lyrics = LyricsTextField.getText();
-            SearchLyricText search = new SearchLyricText();
-
+            String string = null;
             try {
-                search.searchLyricText(lyrics);
-            } catch (IOException | SAXException | ParserConfigurationException e) {
-                throw new RuntimeException(e);
+                 string = SongNonValable.toVerify(artiste, titre);
+            } catch (ParserConfigurationException | IOException | SAXException e) {
+                e.printStackTrace();
             }
+            if(string.equals("http://www.chartlyrics.com")){
+                Label label = new Label("Song Non Available");
+                label.setStyle("-fx-font-size: 17px;-fx-text-fill: white;");
+                GridPane.setConstraints(label, 0, 0);
 
-            for (int i = 1; i <= numberOfResult; i++) {
-                Song song = search.getToPrint().get(i - 1);
+                GridPane.setHalignment(label, HPos.CENTER);
+
+                gridPane.setAlignment(Pos.CENTER);
+
+                gridPane.getChildren().add(label);
+            }else {
+
                 Button songButton = new Button();
-                songButton.setText(song.getAuthor() + " - " +  song.getTitle());
-                songButton.setPadding(new Insets(0.0, 20, 0.0, 20));
+                songButton.setText(song.getAuthor() + " - " + song.getTitle());
+                songButton.setPadding(new Insets(0, 20, 0, 20));
                 songButton.setPrefWidth(700);
                 songButton.setPrefHeight(70);
                 songButton.setStyle("-fx-font-size: 17px;");
-                gridPane.add(songButton, 0, i);
-                gridPane.setPadding(new Insets(20,100,250,100));
+
+                gridPane.add(songButton, 0, 0);
+                gridPane.setPadding(new Insets(0, 100, 250, 100));
+                Song finalSong = song;
                 songButton.setOnAction(event1 -> {
                     try {
-                        windowOfMyLyrics(song);
+                        windowOfMyLyrics(finalSong);
                     } catch (IOException | ParserConfigurationException | SAXException e) {
                         throw new RuntimeException(e);
                     }
                 });
 
+
                 Button addFav = new Button("\u2661");
                 addFav.setStyle("-fx-text-fill: black;-fx-font-size: 30px;");
 
                 addFav.setPrefSize(70, 70);
-                gridPane.add(addFav, 1, i);
-                gridPane.setVgap(15);
+                gridPane.add(addFav, 1, 0);
 
                 CornerRadii songButtonCornerRadii = new CornerRadii(50, 0, 0, 50, false);
-                BackgroundFill songButtonBackgroundFill = new BackgroundFill(Color.rgb(173,0,37), songButtonCornerRadii, null);
+                BackgroundFill songButtonBackgroundFill = new BackgroundFill(Color.rgb(173, 0, 37), songButtonCornerRadii, null);
                 Background songButtonBackground = new Background(songButtonBackgroundFill);
 
                 CornerRadii addFavCornerRadii = new CornerRadii(0, 50, 50, 0, false);
-                BackgroundFill addFavBackgroundFill = new BackgroundFill(Color.rgb(173,0,37), addFavCornerRadii, null);
+                BackgroundFill addFavBackgroundFill = new BackgroundFill(Color.rgb(173, 0, 37), addFavCornerRadii, null);
                 Background addFavBackground = new Background(addFavBackgroundFill);
 
                 songButton.setBackground(songButtonBackground);
@@ -194,17 +124,14 @@ public class LyricsAppController implements Initializable {
 
                 songButton.setTextFill(Color.rgb(169, 160, 144));
 
-
+                Song finalSong1 = song;
                 addFav.setOnAction(event1 -> {
-
-                        addFav.setStyle("-fx-text-fill: #A9A090; -fx-font-size: 30px;");
-                        if (!MyFav.getSongs().contains(song)) {
-                            try {
-                                MyFav.addMusic(song);
-                            } catch (songException e) {
-                                throw new RuntimeException(e);
-                            }
-                        }
+                    addFav.setStyle("-fx-text-fill: #A9A090; -fx-font-size: 30px;");
+                    try {
+                        MyFav.addMusic(finalSong1);
+                    } catch (songException e) {
+                        throw new RuntimeException(e);
+                    }
 
                 });
 
@@ -234,6 +161,112 @@ public class LyricsAppController implements Initializable {
                     songButton.setScaleX(1.0);
                     songButton.setScaleY(1.0);
                 });
+            }
+        });
+
+        SearchByLyricsButton.setOnAction(event -> {
+            gridPane.getChildren().clear();
+
+            int numberOfResult = value.getValue();
+            String lyrics = LyricsTextField.getText();
+            SearchLyricText search = new SearchLyricText();
+
+            try {
+                search.searchLyricText(lyrics);
+            } catch (IOException | SAXException | ParserConfigurationException e) {
+                throw new RuntimeException(e);
+            }
+
+            for (int i = 1; i <= numberOfResult; i++) {
+                Song song = search.getToPrint().get(i - 1);
+                if (song.getAuthor() ==  null && song.getTitle() == null) {
+                    Label label = new Label("Song Non Available");
+                    label.setStyle("-fx-font-size: 17px;-fx-text-fill: white;");
+                    GridPane.setConstraints(label, 0, 0);
+
+                    GridPane.setHalignment(label, HPos.CENTER);
+
+                    gridPane.setAlignment(Pos.CENTER);
+
+                    gridPane.getChildren().add(label);
+                } else {
+                    Button songButton = new Button();
+                    songButton.setText(song.getAuthor() + " - " + song.getTitle());
+                    songButton.setPadding(new Insets(0.0, 20, 0.0, 20));
+                    songButton.setPrefWidth(700);
+                    songButton.setPrefHeight(70);
+                    songButton.setStyle("-fx-font-size: 17px;");
+                    gridPane.add(songButton, 0, i);
+                    gridPane.setPadding(new Insets(20, 100, 250, 100));
+                    songButton.setOnAction(event1 -> {
+                        try {
+                            windowOfMyLyrics(song);
+                        } catch (IOException | ParserConfigurationException | SAXException e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
+
+                    Button addFav = new Button("\u2661");
+                    addFav.setStyle("-fx-text-fill: black;-fx-font-size: 30px;");
+
+                    addFav.setPrefSize(70, 70);
+                    gridPane.add(addFav, 1, i);
+                    gridPane.setVgap(15);
+
+                    CornerRadii songButtonCornerRadii = new CornerRadii(50, 0, 0, 50, false);
+                    BackgroundFill songButtonBackgroundFill = new BackgroundFill(Color.rgb(173, 0, 37), songButtonCornerRadii, null);
+                    Background songButtonBackground = new Background(songButtonBackgroundFill);
+
+                    CornerRadii addFavCornerRadii = new CornerRadii(0, 50, 50, 0, false);
+                    BackgroundFill addFavBackgroundFill = new BackgroundFill(Color.rgb(173, 0, 37), addFavCornerRadii, null);
+                    Background addFavBackground = new Background(addFavBackgroundFill);
+
+                    songButton.setBackground(songButtonBackground);
+                    addFav.setBackground(addFavBackground);
+
+                    songButton.setTextFill(Color.rgb(169, 160, 144));
+
+
+                    addFav.setOnAction(event1 -> {
+
+                        addFav.setStyle("-fx-text-fill: #A9A090; -fx-font-size: 30px;");
+                        if (!MyFav.getSongs().contains(song)) {
+                            try {
+                                MyFav.addMusic(song);
+                            } catch (songException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+
+                    });
+
+                    songButton.setOnMouseEntered(event1 -> {
+                        songButton.setScaleX(1.1);
+                        songButton.setScaleY(1.1);
+                        addFav.setScaleX(1.1);
+                        addFav.setScaleY(1.1);
+                    });
+                    songButton.setOnMouseExited(event1 -> {
+                        songButton.setScaleX(1.0);
+                        songButton.setScaleY(1.0);
+                        addFav.setScaleX(1.0);
+                        addFav.setScaleY(1.0);
+                    });
+
+                    addFav.setOnMouseEntered(event1 -> {
+                        addFav.setScaleX(1.1);
+                        addFav.setScaleY(1.1);
+                        songButton.setScaleX(1.1);
+                        songButton.setScaleY(1.1);
+                    });
+
+                    addFav.setOnMouseExited(event1 -> {
+                        addFav.setScaleX(1.0);
+                        addFav.setScaleY(1.0);
+                        songButton.setScaleX(1.0);
+                        songButton.setScaleY(1.0);
+                    });
+                }
             }
         });
 
