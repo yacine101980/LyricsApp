@@ -355,11 +355,11 @@ public class LyricsAppController implements Initializable {
         String pathToCovert = CovertOfSong.showCovert(song.getAuthor(), song.getTitle());
         Image image = null;
         if(pathToCovert.isEmpty() || pathToCovert == null){
-            image = new Image(new FileInputStream("src/main/resources/app/lyricsapp/No_Cover.jpg"));
+            image = new Image(new FileInputStream("src/main/resources/app/lyricsapp/view/No_Cover.jpg"));
         } else {
             image =new Image(pathToCovert);
             if (image.isError()) {
-                image = new Image(new FileInputStream("src/main/resources/app/lyricsapp/No_Cover.jpg"));
+                image = new Image(new FileInputStream("src/main/resources/app/lyricsapp/view/No_Cover.jpg"));
             }
         }
         ImageView imageView = new ImageView(image);
